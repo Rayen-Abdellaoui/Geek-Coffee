@@ -1,0 +1,44 @@
+<mat-toolbar class="navbar">
+    <a href="/">
+      <img src="assets/logo1.png" alt="Logo" class="logo" />
+    </a>
+
+    <nav class="nav-links">
+      <a [routerLink]="['/']" mat-list-item>Home</a>
+      <a [routerLink]="['/reservation']" mat-list-item>Reservation</a>
+      <a [routerLink]="['/gallery']" mat-list-item>Gallery</a>
+      <a [routerLink]="['/about']" mat-list-item>Where are we ?</a>
+    </nav>
+
+    <button mat-button
+    (click)="openSignin()">
+      Sign In
+    </button>
+    <button mat-button 
+    (click)="openLogin()">
+      Login
+    </button>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="mobile-menu-button"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-menu #menu="matMenu" class="mobile-menu">
+    <div class="menu-content">
+      <a [routerLink]="['/']" mat-list-item>Accueil</a>
+      <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
+      <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
+      <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
+      <button mat-button >
+        Sign In
+      </button>
+      <button mat-button >
+        Login
+      </button>
+    </div>
+  </mat-menu>

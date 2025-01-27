@@ -1,0 +1,75 @@
+<div class="modal-container">
+  <h2 mat-dialog-title class="modal-title">Join Us</h2>
+  <mat-dialog-content class="modal-content">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <input id="name" 
+             required 
+             formControlName="name" 
+             type="text" 
+             class="modal-input"  
+             placeholder="Name"
+             [ngClass]="{'invalid': myForm.get('name')?.invalid && myForm.get('name')?.touched}">
+      <div *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched" class="error-message">
+        Name is required!
+      </div>
+
+      <input id="lastname"
+             formControlName="lastname" 
+             required
+             type="text" 
+             class="modal-input" 
+             placeholder="Lastname"
+             [ngClass]="{'invalid': myForm.get('lastname')?.invalid && myForm.get('lastname')?.touched}" >
+      <div *ngIf="myForm.get('lastname')?.invalid && myForm.get('lastname')?.touched" class="error-message">
+        Lastname is required!
+      </div>
+
+      <input id="email" 
+             formControlName="email" 
+             required
+             type="email" 
+             class="modal-input"  
+             placeholder="Email"
+             [ngClass]="{'invalid': myForm.get('email')?.invalid && myForm.get('email')?.touched}">
+      <div *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched" class="error-message">
+        Email is required!
+      </div>
+
+      <input id="phone" 
+             formControlName="phone" 
+             required
+             type="tel" 
+             class="modal-input"  
+             placeholder="Phone Numbrer"
+             [ngClass]="{'invalid': myForm.get('phone')?.invalid && myForm.get('phone')?.touched}">
+      <div *ngIf="myForm.get('phone')?.invalid && myForm.get('phone')?.touched" class="error-message">
+        Phone is required!
+      </div>
+
+      <input id="password" 
+             formControlName="password" 
+             required
+             type="password" 
+             class="modal-input"  
+             placeholder="Password"
+             [ngClass]="{'invalid': myForm.get('password')?.invalid && myForm.get('password')?.touched}">
+      <div *ngIf="myForm.get('password')?.invalid && myForm.get('password')?.touched" class="error-message">
+        Password is required!
+      </div>
+      
+      
+      <input id="check" 
+             formControlName="check"
+             required 
+             type="checkbox"  
+             [ngClass]="{'invalid': myForm.get('check')?.invalid && myForm.get('check')?.touched}">
+      <label class="checkbox-label" >I agree to the terms and privacy policy
+      <div *ngIf="myForm.get('check')?.invalid && myForm.get('check')?.touched" class="error-message">
+        Accepting our terms is required
+      </div></label>
+      <div class="button-div">
+        <button class="modal-button" type="submit" [disabled]="myForm.invalid">Submit</button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div> 
