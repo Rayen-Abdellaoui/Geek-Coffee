@@ -68,7 +68,7 @@
         Accepting our terms is required
       </div></label>
       <div class="button-div">
-        <button class="modal-button" type="submit" [disabled]="myForm.invalid">Submit</button>
+        <button [mat-dialog-close]="true" class="modal-button" type="submit" [disabled]="myForm.invalid">Submit</button>
       </div>
     </form>
   </mat-dialog-content>

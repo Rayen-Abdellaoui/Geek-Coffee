@@ -17,24 +17,27 @@ export class UsersService {
   ){}
 
   //Register Service
-  async register(userData: CreateUserDto): Promise<Partial<Users>> {
+  async register(userData: CreateUserDto){
     const user = this.usersRepository.create({
       ...userData
     });
     user.salt = await bcrypt.genSalt();
     user.password = await bcrypt.hash(user.password, user.salt);
+    const payload = {
+      name: user.name,
+      lastname: user.lastname,
+      email: user.email,
+      role: user.role
+    };
+    const jwt = await this.jwtService.sign(payload);
     try {
       await this.usersRepository.save(user);
     } catch (e) {
-      throw new ConflictException(`Email a été utilisé`);
+      throw new ConflictException(`Email has been used`);
     }
     return {
-        id: user.id,
-        name: user.name,
-        lastname: user.lastname,
-        email: user.email,
-        role: user.role
-      };
+      "access_token" : jwt
+    };
 
   }
   // Login Service

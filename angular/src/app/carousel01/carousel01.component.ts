@@ -25,7 +25,5 @@ export class Carousel01Component implements OnInit {
     };
   }
 
-  onItemChange($event: any): void {
-    console.log('Carousel onItemChange', $event);
-  }
+
 }
