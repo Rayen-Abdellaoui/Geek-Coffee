@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component,signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component,inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MatDialogContent,
@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
-
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-signin-modal',
@@ -23,9 +23,9 @@ import { AuthService } from '../auth.service';
 export class SigninModalComponent {
   myForm: FormGroup;
 
-
   constructor(private fb: FormBuilder,
-              private authService:AuthService
+              private authService:AuthService,
+              private toastService:ToastService
   ) {
     this.myForm = this.fb.group({
       name: ['', Validators.required],
@@ -48,7 +48,16 @@ export class SigninModalComponent {
         agreedToTerms: this.myForm.value.check
       };
 
-      this.authService.signIn(formData);
+      this.authService.signIn(formData)
+      .subscribe({
+        next: (response) => {
+          localStorage.setItem('access_token',response.access_token);
+          console.log('Registration successful');
+        },
+        error: (error) => {
+          this.toastService.showMessage(error.error.message);
+        }
+      });
       
     }
   }

@@ -67,7 +67,7 @@ export class UsersService {
         "access_token" : jwt
       };
     } else {
-      throw new NotFoundException('username ou password erronée');
+      throw new NotFoundException('Wrong email or password');
     }
   }
 

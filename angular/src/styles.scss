@@ -1,0 +1,24 @@
+@use '@angular/material' as mat;
+@font-face {
+  font-family: Syne;
+  src: url(.../../../public/fonts/Syne-VariableFont_wght.ttf);
+}
+:root {
+    --first-color: #222831;
+    --second-color : #393E46;
+    --third-color : #00ADB5;
+    --fourth-color : #EEEEEE;
+
+    @include mat.snack-bar-overrides((
+      container-color: #222831,
+      supporting-text-color: #00ADB5,
+      button-color:#EEEEEE,
+      supporting-text-font : Syne,
+      supporting-text-size: 15px,
+      supporting-text-weight:bold
+    ));
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component,signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component,} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MatDialogContent,
@@ -12,10 +12,12 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
 
 
+
 @Component({
   selector: 'app-login-modal',
   imports: [MatDialogTitle, MatDialogContent,MatDialogClose,
-    MatButtonModule,MatFormFieldModule,ReactiveFormsModule,CommonModule],
+    MatButtonModule,MatFormFieldModule,ReactiveFormsModule,CommonModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.css'

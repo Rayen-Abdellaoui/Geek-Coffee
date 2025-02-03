@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastService } from './toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,13 @@ export class AuthService {
   loginLink = 'http://localhost:3000/users/login';
 
   constructor(
-    private http : HttpClient
+    private http : HttpClient,
+    private toastService : ToastService
   ) {}
   
   signIn (userData : object){
     return this.http.post<{ access_token: string }>(this.signLink, userData)
-    .subscribe({
-      next: (response) => {
-        localStorage.setItem('access_token',response.access_token);
-        console.log('Registration successful');
-      },
-      error: (error) => {
-        console.error('Registration failed', error);
-      }
-    });
+    
   }
 
   login (userData : object){
@@ -33,7 +27,7 @@ export class AuthService {
         console.log('Login successful');
       },
       error: (error) => {
-        console.error('Login failed', error);
+        this.toastService.showMessage(error.error.message);
       }
     });
   }
