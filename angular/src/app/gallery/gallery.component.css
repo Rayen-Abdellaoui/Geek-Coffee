@@ -1,0 +1,47 @@
+.gallery-container {
+  text-align: center;
+  padding: 20px;  
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  
+  grid-template-rows: repeat(2, 400px);  
+  gap: 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.jeu {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.jeu:hover {
+  transform: scale(1.05);
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+button.active {
+  background-color: #28a745;
+}
