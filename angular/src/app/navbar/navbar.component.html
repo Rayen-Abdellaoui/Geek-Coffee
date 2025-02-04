@@ -10,13 +10,19 @@
       <a [routerLink]="['/about']" mat-list-item>Where are we ?</a>
     </nav>
 
-    <button mat-button
-    (click)="openSignin()">
+    <button mat-button class="nav-button"
+    (click)="openSignin()"
+    *ngIf="!isLoggedIn">
       Sign In
     </button>
-    <button mat-button 
-    (click)="openLogin()">
+    <button mat-button class="nav-button"
+    (click)="openLogin()"
+    *ngIf="!isLoggedIn">
       Login
+    </button>
+    <button mat-button class="profile-button" *ngIf="isLoggedIn"
+    [matMenuTriggerFor]="menu1">
+      <img src="../../assets/icon/profile_icon.svg" alt="">
     </button>
 
     <button
@@ -30,15 +36,28 @@
 
   <mat-menu #menu="matMenu" class="mobile-menu">
     <div class="menu-content">
-      <a [routerLink]="['/']" mat-list-item>Accueil</a>
-      <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
-      <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
-      <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
-      <button mat-button >
-        Sign In
-      </button>
-      <button mat-button >
-        Login
-      </button>
+      <a [routerLink]="['/']" mat-list-item>Home</a>
+      <a [routerLink]="['/reservation']" mat-list-item>Reservation</a>
+      <a [routerLink]="['/gallery']" mat-list-item>Gallery</a>
+      <a [routerLink]="['/about']" mat-list-item>Where are we ?</a>
+      <a [routerLink]="['/profile']" mat-list-item *ngIf="isLoggedIn">Profile</a>
+      <a [routerLink]="['/reservation']" mat-list-item *ngIf="isLoggedIn">Log out</a>
+    </div>
+    <button mat-button 
+    (click)="openSignin()"
+    *ngIf="!isLoggedIn">
+      Sign In
+    </button>
+    <button mat-button
+    (click)="openLogin()"
+    *ngIf="!isLoggedIn">
+      Login
+    </button>
+  </mat-menu>
+
+  <mat-menu #menu1="matMenu">
+    <div class="profile-content">
+      <a [routerLink]="['/profile']" mat-list-item>Profile <mat-icon>arrow_forward</mat-icon></a>
+      <button style="background-color: var(--first-color);font-size: 20px;" (click)="logout()">Log out <mat-icon>meeting_room</mat-icon></button>
     </div>
   </mat-menu>

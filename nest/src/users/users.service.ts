@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,6 +15,18 @@ export class UsersService {
     private readonly usersRepository: Repository<Users>,
     private jwtService: JwtService
   ){}
+
+    //Get User
+    async getUser(credentials : Users) : Promise<Users>{
+      const user = await this.usersRepository.findOne({ where: { email : credentials.email } });
+  
+      if (!user) {
+        throw new NotFoundException(`User not found`);
+      }
+      delete user.salt;
+      delete user.password;
+      return user;
+    }
 
   //Register Service
   async register(userData: CreateUserDto){
@@ -69,6 +81,15 @@ export class UsersService {
     } else {
       throw new NotFoundException('Wrong email or password');
     }
+  }
+
+  //Update Service
+  async updateUser(user,credentials : UpdateUserDto){
+    const old_user = await this.usersRepository.findOne({ where: { id : user.id } });
+    if (!old_user) {
+      throw new NotFoundException(`User not found`);
+    }
+    return this.usersRepository.update(old_user.id,credentials);
   }
 
 

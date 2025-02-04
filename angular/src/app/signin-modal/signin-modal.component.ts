@@ -49,15 +49,6 @@ export class SigninModalComponent {
       };
 
       this.authService.signIn(formData)
-      .subscribe({
-        next: (response) => {
-          localStorage.setItem('access_token',response.access_token);
-          console.log('Registration successful');
-        },
-        error: (error) => {
-          this.toastService.showMessage(error.error.message);
-        }
-      });
       
     }
   }

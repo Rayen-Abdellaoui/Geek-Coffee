@@ -3,6 +3,7 @@
   font-family: Syne;
   src: url(.../../../public/fonts/Syne-VariableFont_wght.ttf);
 }
+
 :root {
     --first-color: #222831;
     --second-color : #393E46;
@@ -17,8 +18,12 @@
       supporting-text-size: 15px,
       supporting-text-weight:bold
     ));
+
+    @include mat.menu-overrides((
+      container-color: #222831,
+  ));
   }
   
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;background: linear-gradient(to bottom, #EEEEEE,#393e46b7); }
 

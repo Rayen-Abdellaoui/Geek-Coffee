@@ -54,6 +54,29 @@
   button:hover {
     background-color: var(--second-color);
   }
+  .profile-button{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+  }
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    margin: 10px;
+    height: fit-content;
+  }
+  .profile-content a {
+    color: var(--fourth-color);
+    text-decoration: none;
+    text-align: center;
+    font-size: 20px;
+    font-family: Syne;
+    width: 100%;
+    margin: 10px;
+  }
   
   button[mat-button] {
     color: white;
@@ -71,13 +94,17 @@
     display: none;
     margin-right: 30px;
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1000px) {
     .nav-links,
-    .reservation-button {
+    .reservation-button,.logo, .nav-button,.profile-button{
       display: none;
     }
     .mobile-menu-button {
       display: block;
+      color: var(--first-color);
+    }
+    .mobile-menu-button:hover {
+      color: var(--third-color);
     }
     .logo {
       margin-left: 0;
@@ -88,32 +115,33 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      background-color: #fff;
+      background-color: var(--first-color);
       min-height: 15vh;
     }
     .mobile-menu {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #fff;
+      background-color: red;
       border-radius: 25px;
-      width: 100%;
     }
     .menu-content {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      margin: 0px;
+      width: max-content;
+      margin: 10px;
+      height: fit-content;
     }
     a {
-      color: inherit;
+      color: var(--fourth-color);
       text-decoration: none;
       text-align: center;
-      font-size: larger;
-  
+      font-size: 20px;
+      font-family: Syne;
       width: 100%;
+      margin: 10px;
     }
     button {
       font-size: 1rem;
