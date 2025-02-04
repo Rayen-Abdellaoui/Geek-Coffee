@@ -1,6 +1,7 @@
 .gallery-container {
   text-align: center;
   padding: 20px;  
+  background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
 }
 
 .gallery {

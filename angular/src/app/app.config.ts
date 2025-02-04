@@ -10,6 +10,7 @@ export const appConfig: ApplicationConfig = {
               provideRouter(routes),
               provideHttpClient(),
               { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, 
+              
               provideAnimations()
               
   ]
