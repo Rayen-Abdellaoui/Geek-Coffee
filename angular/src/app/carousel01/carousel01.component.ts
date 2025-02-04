@@ -15,13 +15,13 @@ export class Carousel01Component implements OnInit {
 
   ngOnInit(): void {
     this.slides[0] = {
-      src: '../../assets/geek.jpg'
+      src: '../../assets/coffee.jpg'
     };
     this.slides[1] = {
-      src: '../../assets/carousel2.jpg'
+      src: '../../assets/coffee.jpg'
     };
     this.slides[2] = {
-      src: '../../assets/carousel3.jpg'
+      src: '../../assets/coffee.jpg'
     };
   }
 

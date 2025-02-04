@@ -1,7 +1,7 @@
-<c-carousel  [interval]="2000" transition="crossfade">
+<c-carousel  [interval]="1000" transition="slide">
     <c-carousel-inner>
       <c-carousel-item *ngFor="let slide of slides">
-        <img style="height: 500px;width: 400px;border-radius: 5%;"
+        <img style="height: 20%;width:100%;"
           [src]="slide.src"
           class="carousel-img"
           loading="lazy"
