@@ -19,7 +19,7 @@
     margin: auto;
     box-shadow: 0 4px 8px rgba(104, 104, 104, 0.2);
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--second-color);
     position: relative;
   }
   
@@ -60,7 +60,8 @@
   }
   
   button.submit-button {
-    background-color: #d32f2f;
+    background-color: var(--third-color);
+    color: black;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -72,7 +73,7 @@
   }
   
   button.submit-button:hover {
-    background-color: #b71c1c;
+    background-color: #278a8f;
   }
   
   @media (min-width: 600px) {
@@ -113,3 +114,49 @@
     color: #fff;
   }
   
+  ::ng-deep .mdc-text-field--filled {
+    background-color: var(--third-color)!important;
+}
+
+  .modal-input{
+    background-color: var(--fourth-color);
+    width: 100%;
+    height: 40px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-color: var(--third-color);
+    transition: all 0.3s ease-in-out;
+    font-size: 18px;
+    font-family: Syne;
+    color: #005767;
+    appearance: none; 
+    outline: none;
+  }
+  .modal-input:focus {
+    border-color: var(--third-color);
+    outline: none; 
+    box-shadow: 0 0 10px var(--third-color);
+  }
+  .checkbox-label{
+    color: var(--fourth-color);
+    font-family: Syne Mono;
+    font-size: 12px;
+  }
+  .modal-input::placeholder{
+    color: var(--third-color);
+    font-size: 12px;
+    font-family: Syne;
+    font-weight: bold;
+  }
+
+  
+  ::ng-deep .mat-calendar-body-selected {
+    background-color: #61b6f5!important;
+    color: #ffffff!important;
+}
+::ng-deep .mat-calendar-body-today {
+  border-color: var(--third-color)!important;
+}
+
