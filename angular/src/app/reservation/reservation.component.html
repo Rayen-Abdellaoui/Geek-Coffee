@@ -1,2 +1,36 @@
-<p>reservation works!</p>
+
+<div class="page-container">
+
+    <div class="hero-section" [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}">
+      <div class="hero-content">
+        <h1>At Geek Coffee</h1>
+        <p>We are excited to offer you the opportunity to reserve a gaming table for your favorite Category. 
+            With a set of 8 tables available throughout the week, as well as some evenings during our opening hours, 
+            you’re sure to find a time slot that works for you..</p>
+      </div>
+    </div>
   
+
+    <div class="card-container">
+      <div class="card" *ngFor="let card of cards">
+        <div class="card-image">
+          <img [src]="card.image" [alt]="card.title">
+        </div>
+        <div class="card-content">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.text }}</p>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="info-section">
+      <h2>How to reserve a table ?</h2>
+      <p>Our dedicated team is ready to welcome you for your most exciting gaming sessions. Once your reservation is made online, simply check in at the counter when you arrive. We’ll ask for a drink purchase per player in exchange for access to your reserved gaming table.
+
+        To book your table, it’s easy: just visit here, select the time slot that works best for you, and follow the instructions to complete your reservation. Once on-site, our team will be happy to welcome you and help you make the most of your gaming experience at Wargame Spirit.
+        
+        We look forward to seeing you in-store and sharing our passion for miniatures, Magic, and board games with you. See you soon at Wargame Spirit!</p>
+    </div>
+  </div>
+
