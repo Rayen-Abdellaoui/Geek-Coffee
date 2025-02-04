@@ -1,5 +1,11 @@
 .gallery-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: space-between;
   text-align: center;
+  height: 100%; 
+  position: relative;
   padding: 20px;  
   background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
 
@@ -25,13 +31,23 @@
 .jeu:hover {
   transform: scale(1.05);
 }
+.pagination {
+  display: flex;
+  justify-content: center; 
+  gap: 10px; 
+  position: absolute;
+  bottom: 10px; 
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 .pagination .active {
   background-color: var(--second-color);
   color: white;
+  left: 50%;
 }
 
-.pagination :hover:not(.active) {background-color: #1c566b;}
+.pagination :hover:not(.active) {background-color: #1c566b;  left: 50%;}
 
 button {
   margin: 5px;
