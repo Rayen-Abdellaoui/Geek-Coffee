@@ -1,1 +1,23 @@
-<p>gallery works!</p>
+<div class="gallery-container">
+  <div class="gallery">
+    <img *ngFor="let img of paginatedImages" [src]="img" alt="Image" class="jeu" />
+  </div>
+
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+      Previous
+    </button>
+
+    <button *ngFor="let page of getPageNumbers()" 
+            (click)="changePage(page)" 
+            [class.active]="currentPage === page">
+      {{ page }}
+    </button>
+
+    <button (click)="changePage(currentPage + 1)" 
+            [disabled]="currentPage * itemsPerPage >= images.length">
+      Next
+    </button>
+  </div>
+</div>
+

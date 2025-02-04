@@ -87,6 +87,10 @@
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],
+            "styles": [
+              "node_modules/@coreui/coreui/dist/css/coreui.min.css"
+            ],
+
             "scripts": []
           }
         }
