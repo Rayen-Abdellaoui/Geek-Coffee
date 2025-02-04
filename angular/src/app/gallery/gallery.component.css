@@ -24,15 +24,19 @@
   transform: scale(1.05);
 }
 
-.pagination {
-  margin-top: 20px;
+.pagination .active {
+  background-color: var(--second-color);
+  color: white;
 }
+
+.pagination :hover:not(.active) {background-color: #1c566b;}
 
 button {
   margin: 5px;
-  padding: 10px;
+  padding: 11px;
   border: none;
-  background-color: #007bff;
+  border-radius: 15%;
+  background-color: var(--third-color);
   color: white;
   cursor: pointer;
 }
@@ -41,7 +45,12 @@ button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+button:disabled:hover {
+  background-color: #cccccc!important;
+  cursor: not-allowed;
+}
+
 
 button.active {
-  background-color: #28a745;
+  background-color: var(--second-color);
 }

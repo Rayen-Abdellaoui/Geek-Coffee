@@ -41,8 +41,7 @@ export class LoginModalComponent {
         password: this.LoginForm.value.password,
       };
 
-      this.authService.login(loginData);
-      
+      this.authService.login(loginData);      
     }
   }
 }
