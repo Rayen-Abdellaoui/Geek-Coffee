@@ -25,6 +25,7 @@ export class UsersService {
       }
       delete user.salt;
       delete user.password;
+      delete user.email;
       return user;
     }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +23,7 @@ import { catchError, of } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { NameFormatPipe, PhoneFormatPipe } from '../shared/pipes/pipes';
+import { ToastService } from '../toast/toast.service';
 
 
 registerLocaleData(localeFr);
@@ -69,17 +70,19 @@ export class ReservationModalComponent  {
   startTime: string ='';
   endTime: string ='';
   name: string | null = null;
-  lastName: string | null = null;
+  Guests: number | null = null;
   phone: string ='';
   email: string | null = null;
   categories: any[] = ["Arcade","Billard Table","Card & Board Games","Playstation"];
-  selectedCategory: number | null = null;
+  selectedCategory: string = '';
   timeSlots: string[] = [];
+  reservationUrl ="http://localhost:3000/reservations";
 
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<ReservationModalComponent>,
     private snackBar: MatSnackBar,
+    private toastService : ToastService
   ) {
     this.dialogRef.disableClose = false;
   }
@@ -99,7 +102,7 @@ export class ReservationModalComponent  {
       !this.startTime ||
       !this.endTime ||
       !this.name ||
-      !this.lastName ||
+      !this.Guests ||
       !this.phone ||
       !this.email ||
       !this.selectedCategory
@@ -131,15 +134,25 @@ export class ReservationModalComponent  {
       date: utcDate.toISOString().split('T')[0],
       hour_start: this.startTime,
       hour_end: this.endTime,
-      lastName: this.lastName,
-      phone: this.phone,
-      email: this.email,
-      categoryId: this.selectedCategory,
+      guests:this.Guests,
+      category: this.selectedCategory,
     };
 
-    this.http
-      .post('http://localhost:4321/reservations', reservation)
-      .pipe(catchError(() => of(null)))
-      .subscribe(() => this.dialogRef.close());
+    const token = localStorage.getItem('access_token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
+
+    this.http.post(this.reservationUrl, reservation,{headers})
+      .subscribe({
+        next: (response) => {
+          this.toastService.showMessage("Reservation added successfully");
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          if(error.error.message){
+            this.toastService.showMessage(error.error.message);
+          }
+          this.toastService.showMessage(error.error.message);
+        }
+      });
   } 
 }

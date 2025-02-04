@@ -91,25 +91,10 @@ export class ReservationService {
     return availableTable;
   }
 
-  private async getCombinedReservations(
-    date: Date,
-    hour_start: string,
-    hour_end: string,
-    categoryIds: number[],
-  ): Promise<number> {
-    return this.reservationRepository
-      .createQueryBuilder('reservation')
-      .where('reservation.date = :date', { date })
-      .andWhere('reservation.hour_start = :hour_start', { hour_start })
-      .andWhere('reservation.hour_end = :hour_end', { hour_end })
-      .andWhere('reservation.categoryId IN (:...categoryIds)', { categoryIds })
-      .getCount();
-  }
 
   async addReservation(reservationDto : CreateReservationDto, user) : Promise<Reservation>{
 
     const { date, hour_start, hour_end, category } = reservationDto;
-
     if (!date || !hour_start || !hour_end) {
       throw new BadRequestException(
         'Reservation Data Incomplete',
@@ -118,7 +103,6 @@ export class ReservationService {
 
     let reservationDate = new Date(date);
     const now = new Date();
-    console.log(reservationDate);
     if (isNaN(reservationDate.getTime()) || reservationDate < now) {
       throw new BadRequestException('Invalide Date');
     }
@@ -135,6 +119,7 @@ export class ReservationService {
 
     // check if there is a table for the reservation in the chosen time
     const availableTable = await this.avaibleTable(category,date,hour_start,hour_end);
+    console.log(availableTable);
     if (!availableTable) {
       throw new NotAcceptableException('No available tables for the selected time and category.');
     }

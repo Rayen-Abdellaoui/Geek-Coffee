@@ -19,9 +19,9 @@
           <input id="name" 
           required
           class="modal-input" placeholder="Name" matInput [(ngModel)]="name" [value]="name | nameFormat" />
-          <input id="lastName" 
+          <input id="Guests" 
           required
-          class="modal-input" placeholder="Last Name" matInput [(ngModel)]="lastName"  [value]="lastName | nameFormat"  />
+          class="modal-input" placeholder="Guests" matInput [(ngModel)]="Guests"  [value]="Guests"  />
           <input id="phone" 
           maxlength="8"
           required
@@ -41,7 +41,7 @@
           </mat-select>
         </mat-form-field>
         <div class="button-container">
-          <button mat-button class="submit-button">
+          <button mat-button type="submit" (click)="submit()" class="submit-button">
             Submit
           </button>
         </div>
