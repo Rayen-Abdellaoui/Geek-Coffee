@@ -4,6 +4,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GalleryComponent } from './gallery/gallery.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { GalleryComponent } from './gallery/gallery.component';
     FooterComponent,
     RouterOutlet,
     ReactiveFormsModule,
-    GalleryComponent
+    GalleryComponent,
+    ReservationComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
