@@ -9,7 +9,7 @@
   }
   .home-container {
     display: flex;
-    background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
+    background: linear-gradient(135deg, #f8f6f3, #dcd7f7);;
   }
   
   .main-content {

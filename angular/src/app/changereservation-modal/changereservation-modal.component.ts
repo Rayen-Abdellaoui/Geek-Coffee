@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -21,7 +22,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { ToastService } from '../toast/toast.service';
-import { AuthService } from '../auth.service';
 
 
 registerLocaleData(localeFr);
@@ -58,24 +58,24 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
-  templateUrl: './reservation-modal.component.html',
-  styleUrls: ['./reservation-modal.component.css'],
+  templateUrl: './changereservation-modal.component.html',
+  styleUrl: './changereservation-modal.component.css'
 })
-export class ReservationModalComponent  {
+export class ChangereservationModalComponent{
   selected: Date | null = null;
   startTime: string ='';
   endTime: string ='';
-  Guests: string ='';
   categories: any[] = ["Arcade","Billard Table","Card & Board Games","Playstation"];
   selectedCategory: string = '';
+  Guests: string ='';
   timeSlots: string[] = [];
   reservationUrl ="http://localhost:3000/reservations";
 
   constructor(
     private http: HttpClient,
-    public dialogRef: MatDialogRef<ReservationModalComponent>,
+    public dialogRef: MatDialogRef<ChangereservationModalComponent>,
     private toastService : ToastService,
-    private authService : AuthService
+    @Inject(MAT_DIALOG_DATA) public data: { reservationId: string }
   ) {
     this.dialogRef.disableClose = false;
   }
@@ -89,7 +89,8 @@ export class ReservationModalComponent  {
     this.dialogRef.close();
   }
 
-  submit(): void {
+
+  update(): void {
     if (
       !this.selected ||
       !this.startTime ||
@@ -97,12 +98,7 @@ export class ReservationModalComponent  {
       !this.Guests ||
       !this.selectedCategory
     ) {
-      this.toastService.showMessage("Please fill all fields");
-      return;
-    }
-    if(!this.authService.isLoggedIn()){
-      this.toastService.showMessage("Please create an account or login first");
-      this.dialogRef.close();
+      this.toastService.showMessage('Please fill in all fields in the form')
       return;
     }
 
@@ -124,19 +120,12 @@ export class ReservationModalComponent  {
       category: this.selectedCategory,
     };
 
-    const token = localStorage.getItem('access_token');
-    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
-
-    this.http.post(this.reservationUrl, reservation,{headers})
+    this.http.put(`${this.reservationUrl}/${this.data.reservationId}`, reservation)
       .subscribe({
         next: (response) => {
-          this.toastService.showMessage("Reservation added successfully");
-          this.dialogRef.close();
+          location.reload();
         },
         error: (error) => {
-          if(error.error.message){
-            this.toastService.showMessage(error.error.message);
-          }
           this.toastService.showMessage(error.error.message);
         }
       });

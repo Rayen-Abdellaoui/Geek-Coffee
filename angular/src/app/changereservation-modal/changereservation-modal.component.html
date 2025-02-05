@@ -1,4 +1,3 @@
-
 <div class="reservation-modal" (click)="onBackdropClick($event)">
   <mat-card class="reservation-card" (click)="$event.stopPropagation()">
     <div class="reservation-container" >
@@ -30,9 +29,9 @@
           <input id="Guests" 
           required
           class="modal-input" placeholder="Guests" matInput [(ngModel)]="Guests"  [value]="Guests"  />
-
-          <button mat-button type="submit" (click)="submit()" class="submit-button">
-            Submit
+          
+          <button mat-button type="submit" (click)="update()" class="submit-button">
+            Update
           </button>
         </div>
       </div>

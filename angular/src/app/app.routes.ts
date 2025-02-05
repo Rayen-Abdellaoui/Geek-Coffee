@@ -4,6 +4,8 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { AboutComponent } from './about/about.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
+import { ErrorpageComponent } from './errorpage/errorpage.component';
 
 
 export const routes: Routes = [
@@ -11,5 +13,6 @@ export const routes: Routes = [
     { path: 'gallery', component: GalleryComponent, title: 'Gallery' },
     { path: 'about', component: AboutComponent, title: 'About' },
     { path: 'reservation', component: ReservationComponent, title: 'Reservation' },
-    { path: 'profile', component: ProfileComponent, title: 'Profile' },
+    { path: 'profile', component: ProfileComponent, title: 'Profile',canActivate:[AuthGuard] },
+    {path: '**', component: ErrorpageComponent }
 ];
