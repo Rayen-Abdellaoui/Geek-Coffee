@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   reservations :any[] = [];
   updateLink = "http://localhost:3000/users";
   reservationsLink = "http://localhost:3000/reservations";
+  username :string = "";
 
   constructor(private fb: FormBuilder,
               private http : HttpClient,
@@ -45,6 +46,8 @@ export class ProfileComponent implements OnInit {
           lastname: response.lastname || '',
           phone: response.phone || '',
         })
+        this.username = response.name +' '+ response.lastname;
+        console.log(this.username)
       },
       error: (error) => {
         console.log(error);
