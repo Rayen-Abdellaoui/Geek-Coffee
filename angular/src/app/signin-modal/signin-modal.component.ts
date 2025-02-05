@@ -10,7 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
-import { ToastService } from '../toast/toast.service';
+import { NameFormatPipe , PhoneFormatPipe} from '../shared/pipes/pipes';
+
 
 @Component({
   selector: 'app-signin-modal',
@@ -22,10 +23,10 @@ import { ToastService } from '../toast/toast.service';
 })
 export class SigninModalComponent {
   myForm: FormGroup;
+  namre : string = '';
 
   constructor(private fb: FormBuilder,
-              private authService:AuthService,
-              private toastService:ToastService
+              private authService:AuthService
   ) {
     this.myForm = this.fb.group({
       name: ['', Validators.required],
@@ -36,6 +37,7 @@ export class SigninModalComponent {
       check: ['', Validators.required]
     });
   }
+  
 
   onSubmit() {
     if (this.myForm.valid) {

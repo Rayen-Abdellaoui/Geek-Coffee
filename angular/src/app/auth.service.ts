@@ -56,10 +56,8 @@ export class AuthService {
     localStorage.removeItem('access_token');
   }
 
-  get(url: string): Observable<User> {
-    const token = localStorage.getItem('access_token');
-    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
-    return this.http.get<User>(url, { headers });
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('access_token');
   }
 
 }

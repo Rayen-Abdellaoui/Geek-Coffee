@@ -7,7 +7,7 @@
       <a [routerLink]="['/']" mat-list-item>Home</a>
       <a [routerLink]="['/reservation']" mat-list-item>Reservation</a>
       <a [routerLink]="['/gallery']" mat-list-item>Gallery</a>
-      <a [routerLink]="['/about']" mat-list-item>Where are we ?</a>
+      <a [routerLink]="['/about']" mat-list-item>Where we are ?</a>
     </nav>
 
     <button mat-button class="nav-button"
@@ -39,9 +39,9 @@
       <a [routerLink]="['/']" mat-list-item>Home</a>
       <a [routerLink]="['/reservation']" mat-list-item>Reservation</a>
       <a [routerLink]="['/gallery']" mat-list-item>Gallery</a>
-      <a [routerLink]="['/about']" mat-list-item>Where are we ?</a>
+      <a [routerLink]="['/about']" mat-list-item>Where we are ?</a>
       <a [routerLink]="['/profile']" mat-list-item *ngIf="isLoggedIn">Profile</a>
-      <a [routerLink]="['/reservation']" mat-list-item *ngIf="isLoggedIn">Log out</a>
+      <button style="background-color: var(--first-color);font-size: 20px;" (click)="logout()">Log out <mat-icon>meeting_room</mat-icon></button>
     </div>
     <button mat-button 
     (click)="openSignin()"

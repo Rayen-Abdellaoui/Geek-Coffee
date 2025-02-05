@@ -1,19 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../auth.service';
+import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
+import { User } from '../user';
+import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
+import { ChangereservationModalComponent } from '../changereservation-modal/changereservation-modal.component';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
   myForm: FormGroup;
-  updateLink = "http://localhost:3000/users"
-  constructor(private fb: FormBuilder,private http : HttpClient,private authservice : AuthService,toastService : ToastService){
+  reservations :any[] = [];
+  updateLink = "http://localhost:3000/users";
+  reservationsLink = "http://localhost:3000/reservations";
+
+  constructor(private fb: FormBuilder,
+              private http : HttpClient,
+              private toastService : ToastService,
+              public dialog: MatDialog,
+  ){
     this.myForm = this.fb.group(
       {
             name: [''],
@@ -21,10 +32,12 @@ export class ProfileComponent implements OnInit {
             phone: ['']
       }
     )
+
   }
 
   ngOnInit() {
-    this.authservice.get(this.updateLink)
+
+    this.http.get<User>(this.updateLink)
     .subscribe({
       next: (response) => {
         this.myForm.setValue({
@@ -32,6 +45,16 @@ export class ProfileComponent implements OnInit {
           lastname: response.lastname || '',
           phone: response.phone || '',
         })
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
+    this.http.get<any[]>(this.reservationsLink)
+    .subscribe({
+      next: (response) => {
+        this.reservations = response;
       },
       error: (error) => {
         console.log(error);
@@ -46,20 +69,34 @@ export class ProfileComponent implements OnInit {
         lastname: this.myForm.value.lastname,
         phone: this.myForm.value.phone,
       };
-      const token = localStorage.getItem('access_token');
-      const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
-      this.http.put(this.updateLink, formData,{headers})
+      this.http.put(this.updateLink, formData)
       .subscribe({
         next: (response) => {
-          console.log('Update successful');
+          this.toastService.showMessage('Update successful');
         },
         error: (error) => {
-          if(error.error.message){
-            console.log(error.error.message);
-          }
-        }
+          this.toastService.showMessage('Update Problem');        }
       });
       
       }
   }
+
+  OnDelete(id : string){
+    this.http.delete(`${this.reservationsLink}/${id}`)
+    .subscribe({
+      next: (response) => {
+        location.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  OnUpdate(id : string){
+      this.dialog.open(ChangereservationModalComponent, {
+        data: { reservationId: id }
+      });
+  };
+
 }
