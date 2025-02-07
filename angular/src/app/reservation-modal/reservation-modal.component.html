@@ -1,40 +1,51 @@
-
 <div class="reservation-modal" (click)="onBackdropClick($event)">
   <mat-card class="reservation-card" (click)="$event.stopPropagation()">
-    <div class="reservation-container" >
-      <div class="datepicker-container"x>
+    <div class="reservation-container">
+      <div class="datepicker-container">
         <mat-calendar [(selected)]="selected"></mat-calendar>
         <div class="time-selection">
           <mat-form-field appearance="fill">
-            <mat-label>Start Hour</mat-label>
+            <mat-label>Heure de début</mat-label>
             <input matInput type="time" [(ngModel)]="startTime" required />
           </mat-form-field>
         
           <mat-form-field appearance="fill">
-            <mat-label>End Hour</mat-label>
+            <mat-label>Heure de fin</mat-label>
             <input matInput type="time" [(ngModel)]="endTime" required />
           </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Catégorie</mat-label>
-            <mat-select [(ngModel)]="selectedCategory">
-              <mat-option
-                *ngFor="let category of categories"
-                [value]="category"
-              >
-                {{ category }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <input id="Guests" 
+        </div>
+      </div>
+      <div class="form-container">
+          <input id="name" 
           required
-          class="modal-input" placeholder="Guests" matInput [(ngModel)]="Guests"  [value]="Guests"  />
-
-          <button mat-button type="submit" (click)="submit()" class="submit-button">
+          class="modal-input" placeholder="Name" matInput [(ngModel)]="name" [value]="name | nameFormat" />
+          <input id="lastName" 
+          required
+          class="modal-input" placeholder="Last Name" matInput [(ngModel)]="lastName"  [value]="lastName | nameFormat"  />
+          <input id="phone" 
+          maxlength="8"
+          required
+          class="modal-input" placeholder="Phone Number" matInput [(ngModel)]="phone" [value]="phone  | phoneFormat"  />
+          <input id="email" 
+          required
+          class="modal-input" placeholder="Email" matInput [(ngModel)]="email" ngModel email />
+        <mat-form-field appearance="fill">
+          <mat-label>Catégorie</mat-label>
+          <mat-select [(ngModel)]="selectedCategory">
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category"
+            >
+              {{ category }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-button class="submit-button">
             Submit
           </button>
         </div>
       </div>
     </div>
   </mat-card>
+</div>
