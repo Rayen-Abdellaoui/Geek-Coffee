@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
@@ -18,10 +19,10 @@ import {
   MatNativeDateModule,
 } from '@angular/material/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { catchError, of } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { ToastService } from '../toast/toast.service';
-import { AuthService } from '../auth.service';
+import { NameFormatPipe, PhoneFormatPipe } from '../shared/pipes/pipes';
 
 
 registerLocaleData(localeFr);
@@ -51,7 +52,9 @@ export const MY_FORMATS = {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    NameFormatPipe,
+    PhoneFormatPipe,
   ],
   providers: [
     provideNativeDateAdapter(),
@@ -65,17 +68,18 @@ export class ReservationModalComponent  {
   selected: Date | null = null;
   startTime: string ='';
   endTime: string ='';
-  Guests: string ='';
+  name: string | null = null;
+  lastName: string | null = null;
+  phone: string ='';
+  email: string | null = null;
   categories: any[] = ["Arcade","Billard Table","Card & Board Games","Playstation"];
-  selectedCategory: string = '';
+  selectedCategory: number | null = null;
   timeSlots: string[] = [];
-  reservationUrl ="http://localhost:3000/reservations";
 
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<ReservationModalComponent>,
-    private toastService : ToastService,
-    private authService : AuthService
+    private snackBar: MatSnackBar,
   ) {
     this.dialogRef.disableClose = false;
   }
@@ -94,15 +98,22 @@ export class ReservationModalComponent  {
       !this.selected ||
       !this.startTime ||
       !this.endTime ||
-      !this.Guests ||
+      !this.name ||
+      !this.lastName ||
+      !this.phone ||
+      !this.email ||
       !this.selectedCategory
     ) {
-      this.toastService.showMessage("Please fill all fields");
-      return;
-    }
-    if(!this.authService.isLoggedIn()){
-      this.toastService.showMessage("Please create an account or login first");
-      this.dialogRef.close();
+      this.snackBar.open(
+        'Please fill in all fields in the form.',
+        'Close',
+        {
+          duration: 5000,
+          panelClass: ['custom-snackbar'],
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        }
+      );
       return;
     }
 
@@ -120,25 +131,15 @@ export class ReservationModalComponent  {
       date: utcDate.toISOString().split('T')[0],
       hour_start: this.startTime,
       hour_end: this.endTime,
-      guests:this.Guests,
-      category: this.selectedCategory,
+      lastName: this.lastName,
+      phone: this.phone,
+      email: this.email,
+      categoryId: this.selectedCategory,
     };
 
-    const token = localStorage.getItem('access_token');
-    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
-
-    this.http.post(this.reservationUrl, reservation,{headers})
-      .subscribe({
-        next: (response) => {
-          this.toastService.showMessage("Reservation added successfully");
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          if(error.error.message){
-            this.toastService.showMessage(error.error.message);
-          }
-          this.toastService.showMessage(error.error.message);
-        }
-      });
+    this.http
+      .post('http://localhost:4321/reservations', reservation)
+      .pipe(catchError(() => of(null)))
+      .subscribe(() => this.dialogRef.close());
   } 
 }
